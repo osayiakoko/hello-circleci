@@ -17,6 +17,7 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
+
   print-hello:
     docker:
       - image: cimg/base:stable
@@ -25,9 +26,10 @@ jobs:
       - run: 
           name: "Print hello"
           command: "echo Hello"
+          
   print-world:
     docker:
-      - image: 
+      - image: cimg/base:stable
     steps: 
       - checkout
       - run: 
