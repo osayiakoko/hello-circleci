@@ -6,6 +6,10 @@ defaults: &defaults
   docker:
     - image: cimg/base:stable
 
+node_img: &node_img
+  docker:
+    - image: circleci/node:13.8.0
+
 commands:
   print_pipeline_id:
     description: "A very simple command for demonstration purposes"
@@ -69,6 +73,14 @@ jobs:
     steps:
       - print_pipeline_id
 
+  try_job_fail:
+    <<: *node_img
+    steps:
+      - run: exit 1
+      - run:
+          name: on error
+          command: echo "Hello Error!"
+          when: on_fail
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -84,4 +96,5 @@ workflows:
       # - print_output_file:
       #     requires:
       #       - save_hello_world_output
-      - print_workflow_id
+      # - print_workflow_id
+      - try_job_fail
